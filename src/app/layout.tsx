@@ -1,13 +1,22 @@
+import cn from 'classnames';
 import Providers from '@/app/providers';
 import { createMetadata } from '@/shared/config/seo/meta.config';
-import { Roboto } from 'next/font/google';
+import Header from '@/widgets/Header';
+import { Roboto, Sofia_Sans } from 'next/font/google';
 import './globals.css';
 
 const roboto = Roboto({
 	weight: ['300', '400', '500', '700'],
-	subsets: ['latin'],
+	subsets: ['latin', 'cyrillic'],
 	display: 'swap',
 	variable: '--font-roboto',
+});
+
+const sofia = Sofia_Sans({
+	weight: ['300', '400', '500', '700'],
+	subsets: ['latin', 'cyrillic'],
+	display: 'swap',
+	variable: '--font-sofia',
 });
 
 export const metadata = createMetadata({
@@ -21,8 +30,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={roboto.variable}>
-				<Providers>{<main className='main'>{children}</main>}</Providers>
+			<body className={cn(roboto.variable, sofia.variable)}>
+				<Providers>
+					<Header />
+					<main className='main'>{children}</main>
+				</Providers>
 			</body>
 		</html>
 	);
