@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import logo from '@/shared/assets/icons/logo.png';
 import { APP_NAME, TITLE_TEMPLATE } from '@/shared/config/seo/constants';
 import { ISeo } from '@/shared/config/seo/types';
-import { clearText } from '@/shared/lib/helpers/string/clearText';
+import { clearText } from '@/shared/utils/string/clearText';
 
 export const createMetadata = ({
 	title,

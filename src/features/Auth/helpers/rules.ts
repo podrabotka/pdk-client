@@ -14,3 +14,11 @@ export const getPasswordRules = () => ({
 		message: AUTH_ERRORS.PASSWORD,
 	},
 });
+
+export const getUnpRules = () => ({
+	required: AUTH_ERRORS.UNP_REQUIRED,
+	pattern: {
+		value: /^[0-9]{9}$/,
+		message: AUTH_ERRORS.UNP_INVALID,
+	},
+});

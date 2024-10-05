@@ -1,12 +1,9 @@
-import { Typography } from "@mui/material";
+import { RegisterForm } from '@/features/Auth';
 
 export default function Login() {
 	return (
 		<>
-			<Typography variant="h1" gutterBottom>
-				Регистрация
-			</Typography>
-			{/* <LoginForm /> */}
+			<RegisterForm />
 		</>
 	);
 }

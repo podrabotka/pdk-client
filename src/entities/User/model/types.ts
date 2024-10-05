@@ -23,4 +23,6 @@ export interface IAuthResponse extends ITokens {
 export interface IAuthParams {
 	email: string;
 	password: string;
+	unp?: string;
+	isEmployer: boolean;
 }

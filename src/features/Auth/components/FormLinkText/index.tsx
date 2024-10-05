@@ -1,8 +1,7 @@
+import { Typography } from '@mui/material';
 import Link from 'next/link';
 
-import { Text } from '@/shared/UI/Text';
-
-import styles from './styles.module.scss';
+import styles from './styles.module.css';
 
 interface IProps {
 	text: string;
@@ -12,11 +11,11 @@ interface IProps {
 
 export const FormLinkText = ({ text, linkText, href }: IProps) => {
 	return (
-		<Text>
+		<Typography>
 			{text}{' '}
 			<Link className={styles.link} href={href}>
 				{linkText}
 			</Link>
-		</Text>
+		</Typography>
 	);
 };

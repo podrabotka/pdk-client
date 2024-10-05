@@ -1,23 +1,21 @@
-import Cookies from 'js-cookie';
-
 import { IAuthResponse, ITokens } from '@/entities/User';
 
-export const saveTokensToCookies = (data: ITokens) => {
-	Cookies.set('accessToken', data.accessToken);
-	Cookies.set('refreshToken', data.refreshToken);
+export const saveTokensToStorage = (data: ITokens) => {
+	localStorage.setItem('accessToken', data.accessToken);
+	localStorage.setItem('refreshToken', data.refreshToken);
 };
 
-export const removeTokensFromCookies = () => {
-	Cookies.remove('accessToken');
-	Cookies.remove('refreshToken');
+export const removeTokensFromStorage = () => {
+	localStorage.removeItem('accessToken');
+	localStorage.removeItem('refreshToken');
 };
 
 export const saveUserDataToStorage = (data: IAuthResponse) => {
-	saveTokensToCookies(data);
-	localStorage.setItem('user', JSON.stringify(data.user));
+	saveTokensToStorage(data);
+	localStorage.setItemItem('user', JSON.stringify(data.user));
 };
 
 export const clearUserDataFromStorage = () => {
-	removeTokensFromCookies();
+	removeTokensFromStorage();
 	localStorage.removeItem('user');
 };
