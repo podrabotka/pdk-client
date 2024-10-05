@@ -1,36 +1,21 @@
-import { IAuthResponse } from "@/entities/User";
+import { IAuthParams, IAuthResponse } from '@/entities/User';
+import { IRegisterForm } from '@/features/Auth/components/byCredentials/type';
 
-import { axiosClassic } from "@/shared/api";
-import { getAuthUrl } from "@/shared/config/api.config";
-import {
-	clearUserDataFromStorage,
-	saveUserDataToStorage,
-} from "@/shared/utils/storage/storage";
+import { axiosClassic } from '@/shared/api';
+import { getAuthUrl } from '@/shared/config/api.config';
+import { clearUserDataFromStorage, saveUserDataToStorage } from '@/shared/utils/storage/storage';
 
 export const AuthService = {
-	async register(email: string, password: string): Promise<IAuthResponse> {
-		const response = await axiosClassic.post<IAuthResponse>(
-			getAuthUrl("register"),
-			{
-				email,
-				password,
-			}
-		);
+	async register(data: IRegisterForm): Promise<IAuthResponse> {
+		const response = await axiosClassic.post<IAuthResponse>(getAuthUrl('signup'), data);
 
-		if (response.data.accessToken) saveUserDataToStorage(response.data);
+		if (response.data.access_token) saveUserDataToStorage(response.data);
 		return response.data;
 	},
 
-	async login(email: string, password: string): Promise<IAuthResponse> {
-		const response = await axiosClassic.post<IAuthResponse>(
-			getAuthUrl("login"),
-			{
-				email,
-				password,
-			}
-		);
-
-		if (response.data.accessToken) saveUserDataToStorage(response.data);
+	async login(data: IAuthParams): Promise<IAuthResponse> {
+		const response = await axiosClassic.post<IAuthResponse>(getAuthUrl('signin'), data);
+		if (response.data.access_token) saveUserDataToStorage(response.data);
 		return response.data;
 	},
 
@@ -39,14 +24,11 @@ export const AuthService = {
 	},
 
 	async getNewTokens(): Promise<IAuthResponse> {
-		const response = await axiosClassic.post<IAuthResponse>(
-			getAuthUrl("refresh"),
-			{
-				token: localStorage.getItem("refreshToken"),
-			}
-		);
+		const response = await axiosClassic.post<IAuthResponse>(getAuthUrl('refresh'), {
+			token: localStorage.getItem('refreshToken'),
+		});
 
-		if (response.data.accessToken) saveUserDataToStorage(response.data);
+		if (response.data.access_token) saveUserDataToStorage(response.data);
 		return response.data;
 	},
 };

@@ -4,4 +4,6 @@ export interface ILoginForm extends IAuthParams {}
 
 export interface IRegisterForm extends IAuthParams {
 	repeatPassword: string;
+
+	isEmployer: boolean;
 }

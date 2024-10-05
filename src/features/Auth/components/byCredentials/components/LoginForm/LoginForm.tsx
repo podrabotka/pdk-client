@@ -1,7 +1,7 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-
+import { v4 as uuid } from 'uuid';
 import { useAuth } from '@/entities/User';
 
 import { getAuthUrl } from '@/shared/config/api.config';
@@ -21,14 +21,12 @@ export const LoginForm = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
-		reset,
 	} = useForm<ILoginForm>({ mode: 'onChange' });
 	const { login } = useActions();
 	const { isLoading } = useAuth();
 
 	const onSubmit: SubmitHandler<ILoginForm> = data => {
-		login(data);
-		reset();
+		login({ ...data, deviceId: localStorage.getItem('deviceId') || uuid() });
 	};
 
 	return (

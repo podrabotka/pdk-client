@@ -7,8 +7,14 @@ export interface IUser {
 }
 
 export interface ITokens {
-	accessToken: string;
-	refreshToken: string;
+	access_token: {
+		token: string;
+		exp: number;
+	};
+	refresh_token: {
+		token: string;
+		exp: number;
+	};
 }
 
 export interface IUserData {
@@ -23,6 +29,6 @@ export interface IAuthResponse extends ITokens {
 export interface IAuthParams {
 	email: string;
 	password: string;
+	deviceId: string;
 	unp?: string;
-	isEmployer: boolean;
 }

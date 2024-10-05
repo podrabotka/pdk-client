@@ -3,6 +3,7 @@ import Providers from '@/app/providers';
 import { createMetadata } from '@/shared/config/seo/meta.config';
 import Header from '@/widgets/Header';
 import { Roboto, Sofia_Sans } from 'next/font/google';
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import './globals.css';
 
 const roboto = Roboto({

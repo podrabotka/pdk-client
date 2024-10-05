@@ -1,17 +1,18 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { toastr } from "react-redux-toastr";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { toastr } from 'react-redux-toastr';
 
-import { AuthService } from "@/entities/User/api/services/auth";
-import { IAuthParams, IAuthResponse } from "@/entities/User/model/types";
+import { AuthService } from '@/entities/User/api/services/auth';
+import { IAuthParams, IAuthResponse } from '@/entities/User/model/types';
 
-import { toastrError } from "@/shared/utils/error/toastrError";
+import { toastrError } from '@/shared/utils/error/toastrError';
+import { IRegisterForm } from '@/features/Auth/components/byCredentials/type';
 
-export const register = createAsyncThunk<IAuthResponse, IAuthParams>(
-	"auth/register",
-	async ({ email, password }, thunkApi) => {
+export const register = createAsyncThunk<IAuthResponse, IRegisterForm>(
+	'auth/signup',
+	async (authData, thunkApi) => {
 		try {
-			const data = await AuthService.register(email, password);
-			toastr.success("Registration", "Completed successfully");
+			const data = await AuthService.register(authData);
+			toastr.success('Регистрация', 'Завершена успешно');
 			return data;
 		} catch (error) {
 			toastrError(error);
@@ -21,11 +22,11 @@ export const register = createAsyncThunk<IAuthResponse, IAuthParams>(
 );
 
 export const login = createAsyncThunk<IAuthResponse, IAuthParams>(
-	"auth/login",
-	async ({ email, password }, thunkApi) => {
+	'auth/signin',
+	async (authData, thunkApi) => {
 		try {
-			const data = await AuthService.login(email, password);
-			toastr.success("Login", "Completed successfully");
+			const data = await AuthService.login(authData);
+			toastr.success('Вход', 'Завершен успешно');
 			return data;
 		} catch (error) {
 			toastrError(error);
@@ -34,7 +35,7 @@ export const login = createAsyncThunk<IAuthResponse, IAuthParams>(
 	}
 );
 
-export const logout = createAsyncThunk("auth/logout", async (_, thunkApi) => {
+export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
 	try {
 		await AuthService.logout();
 	} catch (error) {
@@ -43,20 +44,13 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkApi) => {
 	}
 });
 
-export const checkAuth = createAsyncThunk<IAuthResponse>(
-	"auth/check-auth",
-	async (_, thunkApi) => {
-		try {
-			const data = await AuthService.getNewTokens();
-			return data;
-		} catch (error) {
-			toastrError(
-				"Logout",
-				"Your authorized is finished, plz sign in again"
-			);
-			thunkApi.dispatch(logout());
-
-			return thunkApi.rejectWithValue(error);
-		}
+export const checkAuth = createAsyncThunk<IAuthResponse>('auth/refresh', async (_, thunkApi) => {
+	try {
+		const data = await AuthService.getNewTokens();
+		return data;
+	} catch (error) {
+		toastrError('Выход', 'Ваш уполномоченный закончен, пожалуйста, снова войдите в систему');
+		thunkApi.dispatch(logout());
+		return thunkApi.rejectWithValue(error);
 	}
-);
+});

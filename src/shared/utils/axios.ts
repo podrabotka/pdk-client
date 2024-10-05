@@ -9,7 +9,7 @@ export const createAxiosInstance = (isWithAuth = false) => {
 	});
 
 	if (isWithAuth) {
-		instance.interceptors.request.use((config) => {
+		instance.interceptors.request.use(config => {
 			config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
 			return config;
 		});

@@ -1,7 +1,7 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-
+import { v4 as uuid } from 'uuid';
 import { useAuth } from '@/entities/User';
 
 import { getAuthUrl } from '@/shared/config/api.config';
@@ -24,7 +24,6 @@ export const RegisterForm = () => {
 		handleSubmit,
 		formState: { errors },
 		getValues,
-		reset,
 	} = useForm<IRegisterForm>({ mode: 'onChange' });
 	const { register: signup } = useActions();
 	const { isLoading } = useAuth();
@@ -35,9 +34,11 @@ export const RegisterForm = () => {
 		return AUTH_ERRORS.PASSWORD_CONFIRM;
 	};
 
-	const onSubmit: SubmitHandler<IRegisterForm> = data => {
-		signup(data);
-		reset();
+	const onSubmit: SubmitHandler<IRegisterForm> = ({ repeatPassword, ...data }) => {
+		const localDeviceId = localStorage.getItem('deviceId');
+		let deviceId = localDeviceId || uuid();
+		if (!localDeviceId) localStorage.setItem('deviceId', deviceId);
+		signup({ ...data, deviceId, isEmployer } as IRegisterForm);
 	};
 
 	return (
@@ -86,7 +87,7 @@ export const RegisterForm = () => {
 					err={errors.repeatPassword}
 				/>
 
-				{!isEmployer && (
+				{isEmployer && (
 					<Input {...register('unp', getUnpRules())} placeholder='УНП' err={errors.unp} />
 				)}
 			</Box>

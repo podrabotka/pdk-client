@@ -1,8 +1,8 @@
 import { IAuthResponse, ITokens } from '@/entities/User';
 
 export const saveTokensToStorage = (data: ITokens) => {
-	localStorage.setItem('accessToken', data.accessToken);
-	localStorage.setItem('refreshToken', data.refreshToken);
+	localStorage.setItem('accessToken', data.access_token.token);
+	localStorage.setItem('refreshToken', data.refresh_token.token);
 };
 
 export const removeTokensFromStorage = () => {
