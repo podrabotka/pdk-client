@@ -49,8 +49,9 @@ export const checkAuth = createAsyncThunk<IAuthResponse>('auth/refresh', async (
 		const data = await AuthService.getNewTokens();
 		return data;
 	} catch (error) {
-		toastrError('Выход', 'Ваш уполномоченный закончен, пожалуйста, снова войдите в систему');
-		thunkApi.dispatch(logout());
+		toastrError('Выход', 'Ваш сеанс закончен, пожалуйста, снова войдите в систему');
+		// thunkApi.dispatch(logout());
+		await thunkApi.dispatch(logout()).unwrap();
 		return thunkApi.rejectWithValue(error);
 	}
 });

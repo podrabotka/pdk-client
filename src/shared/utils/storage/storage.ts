@@ -12,7 +12,7 @@ export const removeTokensFromStorage = () => {
 
 export const saveUserDataToStorage = (data: IAuthResponse) => {
 	saveTokensToStorage(data);
-	localStorage.setItemItem('user', JSON.stringify(data.user));
+	localStorage.setItem('user', JSON.stringify(data.user));
 };
 
 export const clearUserDataFromStorage = () => {

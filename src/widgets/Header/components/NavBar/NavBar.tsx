@@ -15,9 +15,12 @@ const NavBar = () => {
 	const { user } = useAuth();
 	const { logout } = useActions();
 
+	console.log(user);
+
 	const handleAuthAction = async () => {
 		if (user) {
 			logout();
+			router.push('/auth/login');
 		} else {
 			router.push('/auth/login');
 		}

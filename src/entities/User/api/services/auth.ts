@@ -25,7 +25,7 @@ export const AuthService = {
 
 	async getNewTokens(): Promise<IAuthResponse> {
 		const response = await axiosClassic.post<IAuthResponse>(getAuthUrl('refresh'), {
-			token: localStorage.getItem('refreshToken'),
+			refresh_token: localStorage.getItem('refreshToken'),
 		});
 
 		if (response.data.access_token) saveUserDataToStorage(response.data);

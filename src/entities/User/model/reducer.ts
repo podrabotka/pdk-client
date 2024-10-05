@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-import { initialState } from "./initialState";
-import { checkAuth, login, logout, register } from "./thunks";
+import { initialState } from './initialState';
+import { checkAuth, login, logout, register } from './thunks';
 
 const userSlice = createSlice({
-	name: "user",
+	name: 'user',
 	initialState,
 	reducers: {},
 	extraReducers: builder => {
@@ -15,6 +15,7 @@ const userSlice = createSlice({
 			})
 			.addCase(register.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
+
 				state.user = payload.user;
 			})
 			.addCase(register.rejected, state => {
